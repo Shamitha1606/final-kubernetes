@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: complete-cicd-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: complete-cicd-app
+  template:
+    metadata:
+      labels:
+        app: complete-cicd-app
+    spec:
+      containers:
+        - name: web-app
+          image: shamitha2006/docker-kubernetes-cicd:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: complete-cicd-service
+spec:
+  type: NodePort
+  selector:
+    app: complete-cicd-app
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
